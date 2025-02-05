@@ -1,69 +1,20 @@
 //Import Express.js
 const express = require('express');
 
-//Import Apollo Server
+//Import Apollo Server and GraphQL Schemas
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
 
 //Import MongoDB and DB models
 const connectDB = require('./db');
-const models = require('./models/index');
+const models = require('./models');
 
 // Run the server on a port
 const port = 4000;
-
-// Construct a schema, using GraphQL's schema language
-const typeDefs = `
-
-  type Mutation{
-    newNote(content: String!): Note!
-  }
-
-  type Query {
-    hello: String!
-    notes: [Note!]!
-    note(id: ID!): Note!
-  }
-
-  type Note{
-    id: ID!
-    content: String!
-    author: String!
-  }
-`;
-
-// Provide resolver functions for our schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-
-    //Return all notes
-    notes: async () => {
-      return await models.Note.find();
-    },
-
-    //Return Single Note
-    note: async (parent, args) => {
-      return await models.Note.findById(args.id);
-    },
-  },
-  Mutation: {
-    //Add new note
-    newNote: async (parent, args) => {
-      const note = await models.Note.create({
-        content: args.content,
-        author: 'Adam Scott',
-      });
-      return {
-        id: note._id.toString(),
-        content: note.content,
-        author: note.author,
-      };
-    },
-  },
-};
 
 const startServer = async () => {
   //Connect to MongoDB befroe Apollo Server
@@ -73,7 +24,10 @@ const startServer = async () => {
   const app = express();
 
   // Apollo Server setup
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
   await server.start();
 
   // Apply Apollo middleware to Express
@@ -82,7 +36,9 @@ const startServer = async () => {
     cors(),
     bodyParser.json(),
     expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.headers.authorization }),
+      context: async () => ({
+        models,
+      }),
     }),
   );
 

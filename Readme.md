@@ -83,3 +83,7 @@ And Finally we can start the server.
 To run the server, call this function
 
     startServer();
+
+## MongoDB 8.0
+
+MongoDB has been updated to 8.0, rather than 3.0 in the book. It is still a good choice of databse. Notice that MongoDB is not a relational databse which is different from SQLite, MySQL, or something like that.
