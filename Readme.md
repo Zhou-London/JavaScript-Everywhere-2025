@@ -87,3 +87,42 @@ To run the server, call this function
 ## MongoDB 8.0
 
 MongoDB has been updated to 8.0, rather than 3.0 in the book. It is still a good choice of databse. Notice that MongoDB is not a relational databse which is different from SQLite, MySQL, or something like that.
+
+### Install
+
+Using brew. Don't forget the "-community"!
+
+    brew install mongodb-community
+
+Start running MongoDB
+
+    brew services mongodb-community
+
+Use this command to check whether mongodb is running
+
+    brew services ls
+
+Just in case, use this command to check the packages you installed by brew
+
+    brew ls
+
+And this command to check the packages you installed by npm
+
+    npm ls
+
+### Run MongoDB Shell
+
+Open your shell, and type this command. Then you will get into the MongoDB shell. Here you can easily do some CRUD.
+
+    mongosh
+
+Many commands in the book have been deprecated. To insert a data, use **insertOne**.
+
+    db.myDataBase.insertOne({ name: "Alice", age: 30 })
+
+As well as **insertMany**.
+
+    db.myDataBase.insertOne([
+        { name: "Alice", age: 30 },
+        { name: "Bob", age: 30 },
+        ])
