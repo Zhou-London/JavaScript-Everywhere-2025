@@ -1,12 +1,18 @@
 //Import Express.js
 const express = require('express');
 
-//Import Apollo Server and GraphQL Schemas
+//Import Apollo Server
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const typeDefs = require('./schema');
+
+//Import GraphQL tools
+const { loadFilesSync } = require('@graphql-tools/load-files');
+
+//Import GraphQL schemas and resolvers
+const path = require('path');
+const typeDefs = loadFilesSync(path.join(__dirname, 'schema.gql'));
 const resolvers = require('./resolvers');
 
 //Import MongoDB and DB models

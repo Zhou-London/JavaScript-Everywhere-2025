@@ -12,7 +12,8 @@ This is a <span style="color: darkOrchid; font-weight: bold;"> modern version </
 
 - **Apollo server 3.0** => **Apollo server@4.0**
 - **MongoDB 3.0** => **MongoDB@8.0**
-- That stupid **package.json** has been deleted!
+- Latest tool package
+- GraphQL 16.0
 
 ## Apollo Server@4.0
 
@@ -34,7 +35,7 @@ However, in 4.0 version you need two more variable. **bodyParser** and **cors**!
     const bodyParser = require('body-parser');
     const cors = require('cors');
 
-When you write the query, or may say, the **typedef**, don't you any longer need any function, just simply write "``"
+When defining the schema, write this. Or you can write these code in a **gql** file and use **@graphql-tools/load-files** to load the file.
 
     const typeDefs = `
         type Query {
@@ -126,3 +127,69 @@ As well as **insertMany**.
         { name: "Alice", age: 30 },
         { name: "Bob", age: 30 },
         ])
+
+### Mongoose
+
+Mongoose has also been updated. To install the latest Mongoose using npm:
+
+    npm install mongoose
+
+Some old syntax is no longer supported, such as findOneAndRemove(now findOneAndDelete)
+
+    models.Note.findOneAndRemove(...)
+
+## GraphQL
+
+The latest version of GraphQL is 16.0, rather than 14.0. To install GraphQL:
+
+    npm install graphql
+
+The following are some tool depended on GraphQL
+
+### graphql-tools/load-files
+
+This is a tool used to link to a **gql** files in **js** files. To install:
+
+    npm install graphql-tools/load-files
+
+### graphql-scalars
+
+This package includes some scalar types. You will need a **dateTime** type and the old package called **graphql-iso-date** is no longer supported in Graphql@16.0, hence, we use **graphql-scalar**. To install:
+
+    npm install graphql-scalars
+
+## Node.js
+
+To install Node, use whatever package manager you got. For me it is homebrew.
+
+    homebrew install node
+
+Then use npm to install **Express**.
+
+    npm install express
+
+### Nodemon
+
+Nodemon is a tool to restart the server automatically, instead of running node again and again on your own. To install:
+
+    npm intall nodemon
+
+To run:
+
+    npx nodemon ...
+
+## Other tools
+
+Here are some other tools you might need.
+
+### prettier
+
+A simple format tools. Install it by npm:
+
+    npm install prettier.
+
+And then configure it with your code editor. For vscode, just simply install the extension.
+
+# Build the Project
+
+Now that you have installed all the dependencies, we can start building our projects.
