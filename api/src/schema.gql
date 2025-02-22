@@ -3,15 +3,21 @@
 scalar DateTime
 
 type Mutation {
+  #Mutations for Note
   newNote(content: String!): Note!
   updateNote(id: ID!, content: String!): Note!
   deleteNote(id: ID!): Boolean!
+
+  #Mutations for user authenaction
+  signUp(username: String!, email: String!, password: String!): String!
+  signIn(username: String!, email: String!, password: String!): String!
 }
 
 type Query {
   hello: String!
   notes: [Note!]!
   note(id: ID!): Note!
+  users: [User!]!
 }
 
 type Note {
@@ -20,4 +26,12 @@ type Note {
   author: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  avatar: String
+  notes: [Note!]!
 }
